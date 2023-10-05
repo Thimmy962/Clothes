@@ -1,0 +1,52 @@
+:root{
+  --click-colors: rgb(179, 123, 123);
+  --body-backgc: rgb(28, 28, 46);
+
+}
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  background-color: rgb(255, 255, 255);
+  height: 100vh;
+}
+
+/* Header */
+#header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 5vh;
+    align-items: center;
+}
+
+.company{
+    width: 20%;
+}
+
+a, li{
+    list-style: none;
+    text-decoration: none
+}
+
+#loginout{
+    width: 60%;
+}
+.smallerDiv{
+    display: flex;
+    justify-content: space-between;
+}
+.category{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-between;
+}
+
+.click:hover{
+    cursor: pointer;
+}
