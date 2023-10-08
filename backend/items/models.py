@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from account.models import User
 # Create your models here.
@@ -30,8 +31,9 @@ class MinorCategory(models.Model):
         return (f"{self.category.name} {self.name.title()}")
     
 class Product(models.Model):
-    category = models.ForeignKey(MinorCategory, on_delete=models.DO_NOTHING, related_name='categoryItems')
-    owner = models.ForeignKey(User, related_name='userItems', on_delete=models.DO_NOTHING)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, auto_created=True, unique=True, editable=False, null=False)
+    category = models.ForeignKey(MinorCategory, on_delete=models.DO_NOTHING, related_name='categoryItem', null=False)
+    owner = models.ForeignKey(User, related_name='userItems', on_delete=models.DO_NOTHING, null=False)
     description = models.CharField(max_length=64, default='')
     name = models.CharField(max_length=64, default="Has no name")
 

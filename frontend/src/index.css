@@ -1,5 +1,5 @@
 :root{
-  --click-colors: rgb(179, 123, 123);
+  --click-colors: rgb(136, 31, 31);
   --body-backgc: rgb(28, 28, 46);
 
 }
@@ -7,6 +7,7 @@
 *{
   padding: 0;
   margin: 0;
+  color: var(--click-colors);
 }
 
 html{
@@ -19,10 +20,14 @@ html{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 10px 20px;
-    height: 5vh;
+    padding: 10px 20px 0;
+    height: 10vh;
     align-items: center;
+    border-bottom: 1px solid var(--click-colors);
+    position: relative;
+    top: 0;
 }
+
 
 .company{
     width: 20%;
@@ -49,4 +54,57 @@ a, li{
 
 .click:hover{
     cursor: pointer;
+}
+
+
+/* Category Page */
+#category{
+    display: flex;
+}
+
+#categoryList{
+    width: 10%;
+    height: 95vh;
+    font-size: large;
+    border: 1px solid var(--click-colors);
+    border-top: 0;
+    border-left: 0;
+}
+
+
+#categoryList li{
+    align-content: center;
+    padding-left: 5%;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 10px;
+    padding-top: 15%;
+    width: 100%;
+    height: 40px;
+}
+
+#category div{
+    width: 85%;
+    background-color: white;
+    border-top: 0;
+    padding: 10px;
+}
+
+.subcatclick:hover, .subcatclick li:active{
+    background-color: var(--click-colors);
+    color: white;
+}
+
+@media (min-width: 760px) and (max-width: 1050px) {
+    #categoryList
+    {
+        width: 15%;
+    }
+}
+
+@media (max-width: 760px) {
+    #categoryList
+    {
+        width: 25%;
+    }
 }

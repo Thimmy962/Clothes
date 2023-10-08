@@ -34,7 +34,10 @@ def getRoutes(request):
 @api_view(['GET'])
 @permission_classes([permissions.AllowAny])
 def majorCategories(request):
-    categories = MajorCategory.objects.all()
+    try:
+        categories = MajorCategory.objects.all()
+    except MajorCategory.DoesNotExist:
+        return response.Response('Query not Found', status=status.HTTP_404_NOT_FOUND)
     return response.Response([category.serialize() for category in categories], status=status.HTTP_200_OK)
 
 # Minor categories from a Major Category using related name
@@ -44,7 +47,7 @@ def specificMinorCategory(request, category):
     try:
            category = MajorCategory.objects.get(name = category.title())
     except MinorCategory.DoesNotExist:
-        return response.Response("This category does not exist", status=status.HTTP_404_NOT_FOUND)
+        return response.Response("Query not FOund", status=status.HTTP_404_NOT_FOUND)
     
     categories = category.minorcategory.all()
     return response.Response([category.serialize() for category in categories], status=status.HTTP_200_OK)
@@ -60,26 +63,15 @@ def getCategoryItems(request, majorcategory, minorcategory):
         # Each major category has sub minor categories
         # get the minor category under the major gotten above
         category = category.minorcategory.get(name = minorcategory.title())
-    except MinorCategory.DoesNotExist or MinorCategory.DoesNotExist:
-        return response.Response("This category does not exist", status=status.HTTP_404_NOT_FOUND)
+    except:
+        return response.Response("Query not Found", status=status.HTTP_404_NOT_FOUND)
     
-    items = category.categoryItems.all()
+    items = category.categoryItem.all()
     return response.Response([item.serialize() for item in items], status=status.HTTP_200_OK)
-
-
-@permission_classes([permissions.AllowAny])
-@api_view(['GET'])
-def getItemForDisplay(request, id):
-    try:
-        product = Product.objects.get(pk = id)
-        return response.Response(product.serialize(), status=status.HTTP_200_OK)
-    except Product.DoesNotExist:
-        return response.Response("Item not found", status=status.HTTP_404_NOT_FOUND)
-
 
 @permission_classes([permissions.IsAuthenticated, IsOwnerOrReadOnly])
 @api_view(['PUT', 'DELETE'])
-def getItemForUpdateOrDelete(request, method, id):
+def getItemForUpdateOrDelete(request, id):
     try:
         product = Product.objects.get(pk = id)
     except Product.DoesNotExist:
@@ -91,3 +83,12 @@ def getItemForUpdateOrDelete(request, method, id):
 
     elif request.method == 'DELETE':
         product.delete()
+
+@api_view(["GET"])
+@permission_classes([permissions.AllowAny])
+def getItem(reqeust, id):
+    try:
+        product = Product.objects.get(pk = id)
+    except Product.DoesNotExist:
+        return response.Response("Item not found", status=status.HTTP_404_NOT_FOUND)
+    return response.Response(product.serialize(), status=status.HTTP_200_OK)

@@ -5,6 +5,6 @@ urlpatterns = [
     path('category/', majorCategories),
     path('category/<str:category>/', specificMinorCategory),
     path('category/<str:majorcategory>/<str:minorcategory>/', getCategoryItems),
-    path('<int:id>/', getItemForDisplay),
-    path('<str:method>/<int:id>/', getItemForUpdateOrDelete),
+    path('<int:id>/', getItemForUpdateOrDelete),
+    path('<str:id>/', getItem)
 ]
